@@ -40,3 +40,19 @@
 .read-the-docs {
   color: #888;
 }
+
+.Toastify__toast-body .custom-message {
+  color: #3498db;
+}
+
+.Toastify__toast-body .custom-message h5 {
+  color: #3498db !important;
+  font-size: 16px;
+  margin: 10px 0px;
+}
+
+.Toastify__toast-body .custom-message span {
+  color: #3498db !important;
+  font-size: 14px;
+  margin: 0;
+}

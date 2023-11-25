@@ -15,11 +15,9 @@ const firebaseConfig = {
   measurementId: "G-M1FH0YTMY5",
 };
 
-// eslint-disable-next-line no-undef
 firebase.initializeApp(firebaseConfig);
 
 // Retrieve firebase messaging
-// eslint-disable-next-line no-undef
 const messaging = firebase.messaging();
 
 messaging.onBackgroundMessage(function (payload) {
@@ -28,9 +26,23 @@ messaging.onBackgroundMessage(function (payload) {
   const notificationTitle = payload.notification.title;
   const notificationOptions = {
     body: payload.notification.body,
-    image: payload.notification.image,
+    icon: payload.data.icon,
   };
 
-  // eslint-disable-next-line no-restricted-globals
+  // show Notification
   self.registration.showNotification(notificationTitle, notificationOptions);
+
+  // Handle notification click event
+  self.addEventListener("notificationclick", (event) => {
+    const notification = event.notification;
+    if (payload.data && payload.data.link) {
+      console.log("Open URL CLient...");
+      // Open the URL associated with the notification
+      event.waitUntil(clients.openWindow(payload.data.link));
+    } else {
+      console.log("Link not found or not exist.");
+    }
+
+    notification.close();
+  });
 });
